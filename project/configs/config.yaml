@@ -1,18 +1,20 @@
+# Dataset y entrenamiento
 dataset:
-  name: "huggingface/cats-and-dogs"
-  batch_size: 32
-  image_size: 224
+  name: "cats_vs_dogs"         # Nombre del dataset en Hugging Face
+  image_size: 256              # Tamaño de las imágenes para MobileViT
+  batch_size: 16               # Tamaño de batch
 
 training:
-  epochs: 5
-  learning_rate: 1e-4
-  fine_tune_layers: "classifier"  # Fine-tuning progresivo
+  epochs: 5                    # Número de épocas de entrenamiento
+  learning_rate: 5e-5          # Learning rate para el optimizador
+  fine_tune_layers: "classifier"  # Capas a descongelar para fine-tuning
 
+# MLflow
 mlflow:
-  experiment_name: "mobilevit_cats_dogs"
-  tracking_uri: "file:///app/mlruns"
+  tracking_uri: "file:./mlruns"  # URI de tracking local (puede cambiarse a remoto)
+  experiment_name: "cats_vs_dogs_experiment"
 
-paths:
-  mlruns: "../mlruns"
-  models: "../models"
+# Inferencia / demo
+inference:
+  class_names: ["Cat", "Dog"]
 

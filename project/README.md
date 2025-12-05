@@ -22,30 +22,32 @@ Incluye:
 ## 📁 Estructura del proyecto
 
 project/
-├── configs/
-│   ├── config.yaml
-│   └── config.py
-├── training/
-│   ├── train.py
-│   ├── data_loader.py
-│   ├── augmentations.py
-│   ├── model_builder.py
-│   ├── trainer_utils.py
-│   ├── mlflow_utils.py
-│   ├── Dockerfile.train
-│   └── docker-compose.train.yml
-├── inference/
-│   ├── predict.py
-│   ├── app.py
-│   ├── Dockerfile.inference
-│   └── docker-compose.inference.yml
-├── mlruns/
-├── models/
-├── tests/
-│   ├── test_predict.py
-│   └── test_training_imports.py
-├── requirements.txt
-└── README.md
+├─ training/
+│   ├─ __init__.py
+│   ├─ train.py
+│   ├─ data_loader.py
+│   ├─ augmentations.py
+│   ├─ model_builder.py
+│   ├─ trainer_utils.py
+│   └─ mlflow_utils.py
+│
+├─ evaluation/
+│   ├─ __init__.py
+│   ├─ evaluate.py
+│   ├─ metrics.py
+│   └─ plots.py
+│
+├─ inference/
+│   ├─ __init__.py
+│   └─ app.py
+│
+├─ model/
+│   └─ mobilevit_cats_dogs.pt
+│
+├─ configs/
+│   └─ config.yaml
+│
+└─ requirements.txt
 
 
 
