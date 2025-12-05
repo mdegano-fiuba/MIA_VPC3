@@ -1,9 +1,12 @@
 version: "3.8"
 services:
   training:
-    build: .
+    build:
+      context: ..  
+      dockerfile: training/Dockerfile.train
     volumes:
-      - ../mlruns:/app/mlruns
-      - ../data:/app/data
+      - ../mlruns:/app/mlruns      # Para registrar experimentos en MLflow
+    environment:
+      - HF_HOME=/app/hf_cache      # Cache local Hugging Face dentro del contenedor
     command: python training/train.py
 

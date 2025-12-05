@@ -1,11 +1,23 @@
+# Base
 FROM python:3.11-slim
 
+# Directorio de trabajo
 WORKDIR /app
+ENV PYTHONPATH=/app
 
+# Actualizar pip y dependencias básicas
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git curl wget build-essential && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copiar requirements y instalarlas
 COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copiar el código fuente
 COPY . .
 
-CMD ["bash"]
+# Comando por defecto
+CMD ["python", "training/train.py"]
 
