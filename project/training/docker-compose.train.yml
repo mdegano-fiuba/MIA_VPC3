@@ -1,0 +1,9 @@
+version: "3.8"
+services:
+  training:
+    build: .
+    volumes:
+      - ../mlruns:/app/mlruns
+      - ../data:/app/data
+    command: python training/train.py
+

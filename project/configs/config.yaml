@@ -1,0 +1,18 @@
+dataset:
+  name: "huggingface/cats-and-dogs"
+  batch_size: 32
+  image_size: 224
+
+training:
+  epochs: 5
+  learning_rate: 1e-4
+  fine_tune_layers: "classifier"  # Fine-tuning progresivo
+
+mlflow:
+  experiment_name: "mobilevit_cats_dogs"
+  tracking_uri: "file:///app/mlruns"
+
+paths:
+  mlruns: "../mlruns"
+  models: "../models"
+

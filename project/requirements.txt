@@ -1,0 +1,13 @@
+torch
+torchvision
+transformers
+datasets
+timm
+opencv-python
+matplotlib
+scikit-learn
+albumentations
+mlflow
+gradio
+PyYAML
+
