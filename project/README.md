@@ -20,3 +20,36 @@ Incluye:
 ---
 
 ## 📁 Estructura del proyecto
+
+project/
+│
+├── configs/
+│ ├── config.yaml
+│ └── config.py
+│
+├── training/
+│ ├── train.py
+│ ├── data_loader.py
+│ ├── augmentations.py
+│ ├── model_builder.py
+│ ├── trainer_utils.py
+│ ├── mlflow_utils.py
+│ ├── Dockerfile.train
+│ └── docker-compose.train.yml
+│
+├── inference/
+│ ├── predict.py
+│ ├── app.py
+│ ├── Dockerfile.inference
+│ └── docker-compose.inference.yml
+│
+├── mlruns/ # artefactos y métricas de MLflow
+├── models/ # modelo fine tuneado exportado
+├── tests/
+│ ├── test_predict.py
+│ └── test_training_imports.py
+│
+├── requirements.txt
+└── README.md
+
+
