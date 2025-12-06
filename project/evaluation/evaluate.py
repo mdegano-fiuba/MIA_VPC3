@@ -1,8 +1,9 @@
 import torch
 from transformers import MobileViTForImageClassification, MobileViTImageProcessor
 from evaluation.metrics import compute_all_metrics
-from datasets import DatasetDict
+from datasets import Dataset
 from configs.config import CONFIG
+from training.mlflow_utils import start_mlflow_run, log_mlflow_artifacts, log_metrics
 
 def evaluate(model_path, dataset):
     model = MobileViTForImageClassification.from_pretrained(model_path)
@@ -28,14 +29,17 @@ if __name__ == "__main__":
     model_path = CONFIG["folders"]["model"] # Modelo entrenado
     dataset_path = CONFIG["folders"]["test_dataset"] # Dataset de test
     
-    dataset = DatasetDict.load_from_disk(dataset_path)
+    print("\nCargando dataset...\n", flush=True)
+    dataset = Dataset.load_from_disk(dataset_path)
 
     # Llamar a la función evaluate y obtener las métricas
+    print("\nEvaluando métricas...\n", flush=True)
     metrics = evaluate(model_path, dataset)
 
     # Loguear métricas en MLflow
-    with start_mlflow_run():
+    with start_mlflow_run(CONFIG["mlflow"]):
     
+        print("\nLoguenado en MLflow...\n", flush=True)
         log_metrics(metrics)
 
         # Generar y guardar los gráficos
