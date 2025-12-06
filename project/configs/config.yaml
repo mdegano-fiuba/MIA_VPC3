@@ -39,7 +39,7 @@ transforms:
 folders:
   mlflow: "./mlflow"
   test_dataset: "./data/test_dataset"
-  best_model: "./best_model_"
+  best_model: "./model/best_model_"
   root: "./"
   output: "./mobilevit_cats_vs_dogs"
   model: "./model/trained" 
