@@ -9,7 +9,7 @@ def load_cats_dogs_dataset(test_size, seed):
 
     # DATASET REDUCIDO PARA PRUEBAS
     # dataset = load_dataset("cats_vs_dogs")["train"] 
-    dataset = load_from_disk("./data/tinyDS/")
+    dataset = load_from_disk("./data/tinyDS/")["train"] 
     ####
 
     labels = dataset["labels"]
