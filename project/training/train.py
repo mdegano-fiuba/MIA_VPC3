@@ -5,7 +5,7 @@ from training.data_loader import get_dataloaders
 from training.augmentations import get_train_transforms, get_val_transforms
 from training.preprocessing import preprocess_dataset
 from training.model_builder import get_model_and_processor
-from training.trainer_utils import compute_metrics
+from training.trainer_utils import compute_metrics, get_training_args
 from training.mlflow_utils import start_mlflow_run
 from transformers import Trainer, TrainingArguments, EarlyStoppingCallback
 from training.callbacks import MLflowLoggerCallback
@@ -39,20 +39,7 @@ def train():
     model.to(device)
 
     # Configurar Trainer
-    training_args = TrainingArguments(
-        output_dir="./mobilevit_cats_vs_dogs",
-        per_device_train_batch_size=int(CONFIG["dataset"]["batch_size"]),
-        per_device_eval_batch_size=int(CONFIG["dataset"]["batch_size"]),
-        num_train_epochs=int(CONFIG["training"]["epochs"]),
-        learning_rate=float(CONFIG["training"]["learning_rate"]),
-        weight_decay=float(CONFIG["training"]["weight_decay"]),
-        eval_strategy="epoch",
-        save_strategy="epoch",
-        load_best_model_at_end=True,
-        report_to=["mlflow"],
-        logging_steps=int(CONFIG["training"]["logging_steps"]),
-        push_to_hub=False,
-    )
+    training_args = TrainingArguments(**get_training_args())
 
     trainer = Trainer(
         model=model,

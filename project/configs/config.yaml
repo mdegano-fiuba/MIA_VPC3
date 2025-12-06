@@ -7,7 +7,7 @@ dataset:
   
 training:
   epochs: 1                    # Número de épocas de entrenamiento
-  learning_rate: 5e-5          # Learning rate para el optimizador
+  learning_rate: 0.00005       # Learning rate para el optimizador
   weight_decay: 0.1
   fine_tune_layers: "classifier"  # Capas a descongelar para fine-tuning
   patience: 3
