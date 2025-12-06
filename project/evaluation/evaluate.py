@@ -39,7 +39,7 @@ if __name__ == "__main__":
         log_metrics(metrics)
 
         # Generar y guardar los gráficos
-        loss_path, metrics_path = plot_loss_and_metrics(dataset, save_dir=CONFIG["folders"]["root"], prefix="eval_")
+        loss_path, metrics_path = plot_loss_and_metrics(dataset, save_dir=CONFIG["folders"]["aux"], prefix="eval_")
         log_mlflow_artifacts([loss_path, metrics_path])
 
         # Graficar y guardar la matriz de confusión y ROC

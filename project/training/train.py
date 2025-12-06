@@ -67,7 +67,7 @@ def train():
 
         # Curvas de loss y métricas
         log_history = trainer.state.log_history
-        loss_path, metrics_path = plot_loss_and_metrics(log_history, save_dir=CONFIG['folders']['root'], prefix="training_")
+        loss_path, metrics_path = plot_loss_and_metrics(log_history, save_dir=CONFIG['folders']['aux'], prefix="training_")
 
         # Loguear gráficos en MLflow
         log_mlflow_artifacts(loss_path)

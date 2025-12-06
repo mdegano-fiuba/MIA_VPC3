@@ -41,5 +41,6 @@ folders:
   test_dataset: "./data/test_dataset"
   best_model: "./model/best_model_"
   root: "./"
-  output: "./mobilevit_cats_vs_dogs"
+  output: "./model/mobilevit_cats_vs_dogs"
   model: "./model/trained" 
+  aux: "./aux"
