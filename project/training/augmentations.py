@@ -9,7 +9,7 @@ def get_train_transforms(image_size):
     return transforms.Compose([
         transforms.RandomResizedCrop(image_size),
         transforms.RandomHorizontalFlip(),
-        transforms.RandomRotation(CONFIG['transforms']['rotation']),
+        transforms.RandomRotation(int(CONFIG['transforms']['rotation'])),
     ])
 
 def get_val_transforms(image_size):
@@ -19,7 +19,7 @@ def get_val_transforms(image_size):
     """
     from torchvision.transforms import Resize, CenterCrop
     return transforms.Compose([
-        Resize(int(image_size * CONFIG['transforms']['escalation'])),
+        Resize(int(image_size * float(CONFIG['transforms']['escalation']))),
         CenterCrop(image_size)
     ])
 

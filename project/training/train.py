@@ -1,5 +1,5 @@
 # training/train.py
-
+import torch
 from configs.config import CONFIG
 from training.data_loader import get_dataloaders
 from training.augmentations import get_train_transforms, get_val_transforms
@@ -8,26 +8,26 @@ from training.model_builder import get_model_and_processor
 from training.trainer_utils import compute_metrics
 from training.mlflow_utils import start_mlflow_run
 from transformers import Trainer, TrainingArguments, EarlyStoppingCallback
-import torch
 from training.callbacks import MLflowLoggerCallback
+from evaluation.plots import plot_loss_and_metrics
 
 def train():
     """Función principal de entrenamiento de MobileViT Cats vs Dogs."""
     
     # Cargar dataset
     dataset = get_dataloaders(
-        test_size=CONFIG["dataset"]["val_split"],
-        seed=CONFIG["dataset"]["seed"]
+        test_size=float(CONFIG["dataset"]["val_split"]),
+        seed=int(CONFIG["dataset"]["seed"])
     )
 
     # Transformaciones
-    train_transforms = get_train_transforms(CONFIG["transforms"]["image_size"])
-    val_transforms   = get_val_transforms(CONFIG["transforms"]["image_size"])
+    train_transforms = get_train_transforms(int(CONFIG["transforms"]["image_size"]))
+    val_transforms   = get_val_transforms(int(CONFIG["transforms"]["image_size"]))
 
     # Construir modelo y feature extractor
     model, feature_extractor = get_model_and_processor(
         model_name=CONFIG["model"]["name"],
-        num_classes=CONFIG["model"]["num_classes"]
+        num_classes=int(CONFIG["model"]["num_classes"])
     )
 
     # Preprocesamiento dataset
@@ -41,16 +41,16 @@ def train():
     # Configurar Trainer
     training_args = TrainingArguments(
         output_dir="./mobilevit_cats_vs_dogs",
-        per_device_train_batch_size=CONFIG["dataset"]["batch_size"],
-        per_device_eval_batch_size=CONFIG["dataset"]["batch_size"],
-        num_train_epochs=CONFIG["training"]["epochs"],
-        learning_rate=CONFIG["training"]["learning_rate"],
-        weight_decay=CONFIG["training"]["weight_decay"],
+        per_device_train_batch_size=int(CONFIG["dataset"]["batch_size"]),
+        per_device_eval_batch_size=int(CONFIG["dataset"]["batch_size"]),
+        num_train_epochs=int(CONFIG["training"]["epochs"]),
+        learning_rate=float(CONFIG["training"]["learning_rate"]),
+        weight_decay=float(CONFIG["training"]["weight_decay"]),
         eval_strategy="epoch",
         save_strategy="epoch",
         load_best_model_at_end=True,
         report_to=["mlflow"],
-        logging_steps=CONFIG["training"]["logging_steps"],
+        logging_steps=int(CONFIG["training"]["logging_steps"]),
         push_to_hub=False,
     )
 
@@ -60,7 +60,7 @@ def train():
         train_dataset=dataset["train"],
         eval_dataset=dataset["test"],
         compute_metrics=compute_metrics,
-        callbacks=[EarlyStoppingCallback(early_stopping_patience=CONFIG["training"]["patience"]), MLflowLoggerCallback()]
+        callbacks=[EarlyStoppingCallback(early_stopping_patience=int(CONFIG["training"]["patience"])), MLflowLoggerCallback()]
     )
 
     # Entrenar y loguear en MLflow
@@ -71,6 +71,15 @@ def train():
         feature_extractor.save_pretrained("./best_model")
         mlflow.log_artifacts("./best_model", artifact_path="best_model")
 
+        # Curvas de loss y métricas
+        log_history = trainer.state.log_history
+        loss_path, metrics_path = plot_loss_and_metrics(log_history, save_dir="./", prefix="training_")
+
+        # Loguear gráficos en MLflow
+        mlflow.log_artifact(loss_path)
+        if metrics_path:
+            mlflow.log_artifact(metrics_path)
+            
 if __name__ == "__main__":
     train()
 
