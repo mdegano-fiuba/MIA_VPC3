@@ -16,7 +16,7 @@ training:
   
 # MLflow
 mlflow:
-  tracking_uri: "file:./mlruns"  # URI de tracking local (puede cambiarse a remoto)
+  tracking_uri: "file:./mlflow/mlruns"  # URI de tracking local (puede cambiarse a remoto)
   experiment_name: "cats_vs_dogs_experiment"
 
 # Inferencia / demo

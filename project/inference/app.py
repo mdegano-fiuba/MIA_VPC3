@@ -1,5 +1,6 @@
 import torch
 import gradio as gr
+from configs.config import CONFIG
 from PIL import Image
 from transformers import MobileViTForImageClassification, MobileViTImageProcessor
 
@@ -11,7 +12,8 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 model.to(device)
 model.eval()
 
-CLASS_NAMES = ["Cat", "Dog"]
+CLASS_NAMES = CONFIG['inference']['class_names']
+
 
 def predict(img: Image.Image):
     inputs = processor(images=img.convert("RGB"), return_tensors="pt")
