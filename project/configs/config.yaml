@@ -24,5 +24,4 @@ inference:
 model:
   name: "apple/mobilevit-small"
   num_classes: 2
-  frozen_blocks: 3
 
