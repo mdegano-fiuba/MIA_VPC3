@@ -1,18 +1,16 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
-import os
+from sklearn.metrics import confusion_matrix, roc_curve, auc
 
-def plot_confusion_matrix(cm, class_names, save_path=None):
-    """
-    Dibuja la matriz de confusión usando Seaborn.
-    """
-    plt.figure(figsize=(6,5))
-    sns.heatmap(cm, annot=True, fmt="d", cmap="Blues",
-                xticklabels=class_names, yticklabels=class_names)
-    plt.xlabel("Predicted")
-    plt.ylabel("Actual")
-    plt.title("Confusion Matrix")
-    if save_path:
-        plt.savefig(save_path)
-    plt.close()
+def plot_confusion(labels, preds, path="confusion.png"):
+    cm = confusion_matrix(labels, preds)
+    sns.heatmap(cm, annot=True, cmap="Blues")
+    plt.savefig(path)
+
+def plot_roc(labels, probs, path="roc.png"):
+    fpr, tpr, _ = roc_curve(labels, probs[:,1])
+    auc_val = auc(fpr, tpr)
+    plt.plot(fpr, tpr, label=f"AUC {auc_val:.2f}")
+    plt.legend()
+    plt.savefig(path)
 

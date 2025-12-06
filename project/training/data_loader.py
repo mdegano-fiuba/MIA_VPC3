@@ -1,60 +1,19 @@
-import torch
-from torch.utils.data import DataLoader
-from datasets import load_dataset
-from training.augmentations import get_train_transforms, get_val_transforms
-from configs.config import config
+from datasets import load_dataset, DatasetDict
+from sklearn.model_selection import train_test_split
 
-class CatsDogsDataset(torch.utils.data.Dataset):
-    """
-    Dataset personalizado para Cats vs Dogs.
-    Toma la imagen y la etiqueta desde Hugging Face dataset.
-    """
-    def __init__(self, ds, transform=None):
-        self.ds = ds
-        self.transform = transform
+def load_cats_dogs_dataset(test_size=0.2, seed=42):
+    dataset = load_dataset("cats_vs_dogs")["train"]
+    labels = dataset["labels"]
 
-    def __len__(self):
-        return len(self.ds)
-
-    def __getitem__(self, idx):
-        idx = int(idx)  # Convertir a int puro para PyTorch
-        img = self.ds[idx]['image']  # PIL Image
-        label = self.ds[idx]['labels']  
-        if self.transform:
-            img = self.transform(img)
-        return img, label
-
-def get_dataloaders():
-    """
-    Carga el dataset, realiza split balanceado y devuelve DataLoaders.
-    """
-    # 1) Cargar dataset completo
-    dataset = load_dataset(config['dataset']['name'])
-
-    # 2) Hacer split train/val balanceado
-    split = dataset['train'].train_test_split(
-        test_size=config['dataset']['val_split'],
-        stratify_by_column='labels',
-        seed=config['dataset']['seed']
-    )
-    train_ds = CatsDogsDataset(split['train'], transform=get_train_transforms(config['dataset']['image_size']))
-    val_ds = CatsDogsDataset(split['test'], transform=get_val_transforms(config['dataset']['image_size']))
-
-    # 3) Crear DataLoaders
-    train_loader = DataLoader(
-        train_ds,
-        batch_size=config['dataset']['batch_size'],
-        shuffle=True,
-        num_workers=2,  
-        pin_memory=True
-    )
-    val_loader = DataLoader(
-        val_ds,
-        batch_size=config['dataset']['batch_size'],
-        shuffle=False,
-        num_workers=2,
-        pin_memory=True
+    train_idx, test_idx = train_test_split(
+        range(len(labels)),
+        test_size=test_size,
+        stratify=labels,
+        random_state=seed
     )
 
-    return train_loader, val_loader
+    train_ds = dataset.select(train_idx)
+    test_ds = dataset.select(test_idx)
+
+    return DatasetDict({"train": train_ds, "test": test_ds})
 

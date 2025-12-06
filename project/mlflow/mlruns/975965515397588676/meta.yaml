@@ -1,0 +1,6 @@
+artifact_location: file:///content/mlruns/975965515397588676
+creation_time: 1765001231553
+experiment_id: '975965515397588676'
+last_update_time: 1765001231553
+lifecycle_stage: active
+name: mobilevit_cats_vs_dogs

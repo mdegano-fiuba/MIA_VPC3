@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  mlflow:
+    build: .
+    container_name: mlflow_ui
+    ports:
+      - "${MLFLOW_PORT}:5000"
+    volumes:
+      - "${MLRUNS_DIR}:/mlflow/mlruns"
+    environment:
+      - MLFLOW_TRACKING_URI=/mlflow/mlruns
+

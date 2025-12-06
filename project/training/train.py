@@ -1,67 +1,83 @@
-import torch
-from training.data_loader import get_dataloaders
-from training.model_builder import get_model
-from configs.config import config
 import mlflow
+import torch
+from transformers import TrainingArguments, Trainer, EarlyStoppingCallback
 
-def train():
-    train_loader, val_loader = get_dataloaders()
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+from training.data_loader import load_cats_dogs_dataset
+from training.augmentations import get_augmentations
+from training.model_builder import build_model
+from training.trainer_utils import compute_metrics
+from training.mlflow_utils import (
+    init_mlflow, log_confusion_matrix, log_roc_curve,
+    log_probability_histogram
+)
 
-    # Cargar modelo
-    model = get_model()
-    model.to(device)
+from configs.config import CONFIG
 
-    optimizer = torch.optim.AdamW(model.parameters(), lr=config['training']['learning_rate'], weight_decay=config['training']['weight_decay'])
-    criterion = torch.nn.CrossEntropyLoss()
+
+def preprocess_fn(feature_extractor, augmentations):
+    def preprocess(examples):
+        images = [augmentations(img.convert("RGB")) for img in examples["image"]]
+        pixel_values = feature_extractor(images=images, return_tensors="pt").pixel_values
+        return {"pixel_values": pixel_values, "labels": examples["labels"]}
+    return preprocess
+
+
+def main():
+
+    init_mlflow()
+
+    dataset = load_cats_dogs_dataset()
+
+    model, feature_extractor = build_model(CONFIG["model_name"])
+
+    augmentations = get_augmentations()
+
+    preprocess = preprocess_fn(feature_extractor, augmentations)
+
+    dataset = dataset.map(preprocess, batched=True)
+    dataset = dataset.remove_columns(["image"])
+    dataset.set_format(type="torch")
+
+    training_args = TrainingArguments(
+        output_dir="./checkpoints",
+        per_device_train_batch_size=CONFIG["batch_size"],
+        per_device_eval_batch_size=CONFIG["batch_size"],
+        num_train_epochs=CONFIG["epochs"],
+        eval_strategy="epoch",
+        save_strategy="epoch",
+        learning_rate=CONFIG["lr"],
+        weight_decay=CONFIG["weight_decay"],
+        load_best_model_at_end=True,
+        report_to=["mlflow"]
+    )
+
+    trainer = Trainer(
+        model=model,
+        args=training_args,
+        train_dataset=dataset["train"],
+        eval_dataset=dataset["test"],
+        compute_metrics=compute_metrics,
+        callbacks=[EarlyStoppingCallback(early_stopping_patience=3)]
+    )
 
     with mlflow.start_run():
-        mlflow.log_params(config['training'])
-        print("Logging training parameters:", config['training'])
 
-        for epoch in range(config['training']['epochs']):
-            model.train()
-            total_loss = 0
-            for imgs, labels in train_loader:
-                imgs, labels = imgs.to(device), labels.to(device)
-                optimizer.zero_grad()
-                outputs = model(pixel_values=imgs).logits
-                loss = criterion(outputs, labels)
-                loss.backward()
-                optimizer.step()
-                total_loss += loss.item()
+        trainer.train()
 
-            avg_loss = total_loss / len(train_loader)
-            mlflow.log_metric("train_loss", avg_loss, step=epoch)
-            print(f"Epoch {epoch+1}/{config['training']['epochs']} - Train loss: {avg_loss:.4f}")
+        trainer.save_model("./model/mobilevit_cats_dogs.pt")
+        feature_extractor.save_pretrained("./model/")
 
-            # Validación
-            model.eval()
-            val_loss = 0
-            correct = 0
-            total = 0
-            with torch.no_grad():
-                for imgs, labels in val_loader:
-                    imgs, labels = imgs.to(device), labels.to(device)
-                    outputs = model(pixel_values=imgs).logits
-                    loss = criterion(outputs, labels)
-                    val_loss += loss.item()
-                    preds = torch.argmax(outputs, dim=1)
-                    correct += (preds == labels).sum().item()
-                    total += labels.size(0)
+        preds_output = trainer.predict(dataset["test"])
+        logits = preds_output.predictions
+        labels = preds_output.label_ids
+        probs = torch.softmax(torch.tensor(logits), dim=1).numpy()
+        preds = probs.argmax(axis=1)
 
-            avg_val_loss = val_loss / len(val_loader)
-            val_acc = correct / total
-            mlflow.log_metric("val_loss", avg_val_loss, step=epoch)
-            mlflow.log_metric("val_acc", val_acc, step=epoch)
-            print(f"Epoch {epoch+1}/{config['training']['epochs']} - Val loss: {avg_val_loss:.4f} - Val acc: {val_acc:.4f}")
+        log_confusion_matrix(labels, preds)
+        log_roc_curve(labels, probs)
+        log_probability_histogram(probs)
 
-        # Guardar modelo
-        model_save_path = config['training']['output_dir']
-        model.save_pretrained(model_save_path)
-        print(f"Modelo guardado en: {model_save_path}")
-        mlflow.pytorch.log_model(model, "model")
 
 if __name__ == "__main__":
-    train()
+    main()
 
