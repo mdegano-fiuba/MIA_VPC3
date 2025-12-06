@@ -55,8 +55,8 @@ def load_cats_dogs_dataset(test_size, seed, max_samples=None):
     return dataset.select(train_idx), dataset.select(test_idx)
 
 
-def get_dataloaders(test_size, seed):
-    train_ds, test_ds = load_cats_dogs_dataset(test_size, seed)
+def get_dataloaders(test_size, seed, max_samples=None):
+    train_ds, test_ds = load_cats_dogs_dataset(test_size, seed, max_samples=None)
     return DatasetDict({"train": train_ds, "test": test_ds})
 
 
