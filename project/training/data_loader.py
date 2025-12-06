@@ -27,11 +27,17 @@ class CatsDogsDataset(torch.utils.data.Dataset):
 def get_dataloaders():
     """
     Carga el dataset Cats vs Dogs y devuelve DataLoaders de entrenamiento y validación.
+    Hace un split del dataset 'train' manteniendo balance de clases.
     """
     dataset = load_dataset(config['dataset']['name'])
 
-    train_ds = CatsDogsDataset(dataset['train'], transform=get_train_transforms(config['dataset']['image_size']))
-    val_ds = CatsDogsDataset(dataset['test'], transform=get_val_transforms(config['dataset']['image_size']))
+    # Hacer split de train en train/validation manteniendo balance de clases
+    split = dataset['train'].train_test_split(
+        test_size=config['dataset']['val_split'], 
+        stratify_by_column='label'  # mantiene proporción de gatos/perros
+    )
+    train_ds = CatsDogsDataset(split['train'], transform=get_train_transforms(config['dataset']['image_size']))
+    val_ds = CatsDogsDataset(split['test'], transform=get_val_transforms(config['dataset']['image_size']))
 
     train_loader = DataLoader(train_ds, batch_size=config['dataset']['batch_size'], shuffle=True)
     val_loader = DataLoader(val_ds, batch_size=config['dataset']['batch_size'], shuffle=False)
