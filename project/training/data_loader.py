@@ -42,15 +42,6 @@ def load_cats_dogs_dataset(test_size, seed, max_samples=None):
         stratify=labels,
         random_state=seed
     )
-
-
-    labels = dataset["labels"]
-    train_idx, test_idx = train_test_split(
-        range(len(labels)),
-        test_size=test_size,
-        stratify=labels,
-        random_state=seed
-    )
     
     return dataset.select(train_idx), dataset.select(test_idx)
 
