@@ -39,7 +39,6 @@ if __name__ == "__main__":
 
     # Imprimir las métricas obtenidas
     print("Metrics:", metrics)
-    raise ValueError("Abort!")
      
     # Loguear métricas en MLflow
     with start_mlflow_run(CONFIG["mlflow"]):
