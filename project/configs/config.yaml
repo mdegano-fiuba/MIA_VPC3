@@ -4,7 +4,7 @@ dataset:
   image_size: 256              # Tamaño de las imágenes para MobileViT
   batch_size: 16               # Tamaño de batch
   val_split: 0.2               # Porcentaje del dataset que se usará para validación
-  seed: 42		       # Semilla
+  seed: 42                     # Semilla
   
 training:
   epochs: 1                    # Número de épocas de entrenamiento
