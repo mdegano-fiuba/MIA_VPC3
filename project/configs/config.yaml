@@ -4,6 +4,7 @@ dataset:
   batch_size: 16               # Tamaño de batch
   val_split: 0.2               # Porcentaje del dataset que se usará para validación
   seed: 42                     # Semilla
+  max_samples: 1000
   
 training:
   epochs: 20                   # Número de épocas de entrenamiento

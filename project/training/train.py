@@ -17,7 +17,8 @@ def train():
     # Cargar dataset
     dataset = get_dataloaders(
         test_size=float(CONFIG["dataset"]["val_split"]),
-        seed=int(CONFIG["dataset"]["seed"])
+        seed=int(CONFIG["dataset"]["seed"]),
+        max_samples=int(CONFIG["dataset"]["max_samples"])
     )
 
     # Transformaciones
