@@ -6,7 +6,7 @@ from training.augmentations import get_train_transforms, get_val_transforms
 from training.preprocessing import preprocess_dataset
 from training.model_builder import get_model_and_processor
 from training.trainer_utils import compute_metrics, get_training_args
-from training.mlflow_utils import start_mlflow_run
+from training.mlflow_utils import start_mlflow_run, log_mlflow_artifacts, get_active_run
 from transformers import Trainer, TrainingArguments, EarlyStoppingCallback
 from training.callbacks import MLflowLoggerCallback
 from evaluation.plots import plot_loss_and_metrics
@@ -53,10 +53,14 @@ def train():
     # Entrenar y loguear en MLflow
     with start_mlflow_run(CONFIG["mlflow"]):
         trainer.train()
+        
+        run = get_active_run()  
+        model_dir = f"./best_model_{run.info.run_id}"
+    
         # Guardar modelo y feature extractor juntos
-        trainer.model.save_pretrained("./best_model")
-        feature_extractor.save_pretrained("./best_model")
-        log_mlflow_artifacts("./best_model", artifact_path="best_model")
+        trainer.model.save_pretrained(model_dir)
+        feature_extractor.save_pretrained(model_dir)
+        log_mlflow_artifacts("model_dir, artifact_path="best_model")
 
         # Curvas de loss y métricas
         log_history = trainer.state.log_history

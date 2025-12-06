@@ -13,3 +13,10 @@ def start_mlflow_run(mlflow_config):
 
 def log_mlflow_artifacts(path, artifact_path="artifacts"):
     mlflow.log_artifacts(path, artifact_path=artifact_path)
+    
+def get_active_run():
+    """Devuelve el run activo de MLflow. Lanza error si no hay ninguno."""
+    run = mlflow.active_run()
+    if not run:
+        raise RuntimeError("No hay ningún MLflow run activo. Usar start_mlflow_run primero.")
+    return run
