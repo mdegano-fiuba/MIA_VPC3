@@ -20,6 +20,8 @@ def train():
         seed=int(CONFIG["dataset"]["seed"]),
         max_samples=int(CONFIG["dataset"]["max_samples"])
     )
+    # Guardar partición de test para evaluación
+    save_test_dataset(dataset['test'])
 
     # Transformaciones
     train_transforms = get_train_transforms(int(CONFIG["transforms"]["image_size"]))

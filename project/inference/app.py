@@ -3,7 +3,7 @@ import gradio as gr
 from PIL import Image
 from transformers import MobileViTForImageClassification, MobileViTImageProcessor
 
-model_path = "./model"
+model_path = "./model/trained"
 model = MobileViTForImageClassification.from_pretrained(model_path)
 processor = MobileViTImageProcessor.from_pretrained(model_path)
 

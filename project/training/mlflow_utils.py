@@ -20,3 +20,8 @@ def get_active_run():
     if not run:
         raise RuntimeError("No hay ningún MLflow run activo. Usar start_mlflow_run primero.")
     return run
+
+def log_metrics(metrics):
+    for metric_name, metric_value in metrics.items():
+        mlflow.log_metric(metric_name, metric_value)
+
