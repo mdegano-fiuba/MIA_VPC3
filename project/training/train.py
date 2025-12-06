@@ -17,7 +17,9 @@ def train():
 
     with start_mlflow_run() as run:
         # Loguear parámetros de entrenamiento
-        mlflow.log_params(config['training'])
+        for k, v in config['training'].items():
+            mlflow.log_param(k, v)
+            print(f"[MLflow] Param: {k} = {v}")
 
         for epoch in range(config['training']['epochs']):
             model.train()
@@ -33,13 +35,11 @@ def train():
 
             avg_loss = total_loss / len(train_loader)
             mlflow.log_metric("train_loss", avg_loss, step=epoch)
-            print(f"Epoch {epoch+1}: Train loss={avg_loss}")
+            print(f"[MLflow] Metric: train_loss = {avg_loss} (epoch {epoch+1})")
 
             # Validación
             model.eval()
-            val_loss = 0
-            correct = 0
-            total = 0
+            val_loss, correct, total = 0, 0, 0
             with torch.no_grad():
                 for imgs, labels in val_loader:
                     imgs, labels = imgs.to(device), labels.to(device)
@@ -49,15 +49,16 @@ def train():
                     preds = torch.argmax(outputs, dim=1)
                     correct += (preds == labels).sum().item()
                     total += labels.size(0)
+
             avg_val_loss = val_loss / len(val_loader)
             val_acc = correct / total
             mlflow.log_metric("val_loss", avg_val_loss, step=epoch)
             mlflow.log_metric("val_acc", val_acc, step=epoch)
-            print(f"Epoch {epoch+1}: Val loss={avg_val_loss}, Val acc={val_acc}")
+            print(f"[MLflow] Metric: val_loss = {avg_val_loss}, val_acc = {val_acc} (epoch {epoch+1})")
 
         # Guardar modelo en MLflow
         mlflow.pytorch.log_model(model, "model")
-        print("Modelo guardado en MLflow.")
+        print("[MLflow] Modelo guardado en MLflow.")
 
 if __name__ == "__main__":
     train()
