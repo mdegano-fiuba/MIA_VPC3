@@ -1,11 +1,24 @@
 from torchvision import transforms
 
-def get_augmentations():
+def get_train_transforms(image_size):
+    """
+    Transformaciones para el entrenamiento.
+    Incluye augmentations ligeras (geométricas) para evitar overfitting.
+    """
     return transforms.Compose([
-        transforms.RandomResizedCrop(224),
+        transforms.RandomResizedCrop(image_size),
         transforms.RandomHorizontalFlip(),
-        transforms.ColorJitter(
-            brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2
-        )
+        transforms.RandomRotation(CONFIG['transforms']['rotation']),
+    ])
+
+def get_val_transforms(image_size):
+    """
+    Transformaciones para validación/test.
+    Solo resize y crop central para consistencia.
+    """
+    from torchvision.transforms import Resize, CenterCrop
+    return transforms.Compose([
+        Resize(int(image_size * CONFIG['transforms']['escalation']))),
+        CenterCrop(image_size)
     ])
 

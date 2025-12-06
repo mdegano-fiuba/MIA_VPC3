@@ -12,6 +12,6 @@ if not os.path.exists(CONFIG_PATH):
 
 # Cargar el YAML
 with open(CONFIG_PATH, "r") as f:
-    config = yaml.safe_load(f)
+    CONFIG = yaml.safe_load(f)
 
 

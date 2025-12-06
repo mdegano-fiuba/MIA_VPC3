@@ -1,54 +1,57 @@
-import mlflow
-import torch
-from transformers import TrainingArguments, Trainer, EarlyStoppingCallback
-
-from training.data_loader import load_cats_dogs_dataset
-from training.augmentations import get_augmentations
-from training.model_builder import build_model
-from training.trainer_utils import compute_metrics
-from training.mlflow_utils import (
-    init_mlflow, log_confusion_matrix, log_roc_curve,
-    log_probability_histogram
-)
+# training/train.py
 
 from configs.config import CONFIG
+from training.data_loader import get_dataloaders
+from training.augmentations import get_train_transforms, get_val_transforms
+from training.preprocessing import preprocess_dataset
+from training.model_builder import get_model_and_processor
+from training.trainer_utils import compute_metrics
+from training.mlflow_utils import start_mlflow_run
+from transformers import Trainer, TrainingArguments, EarlyStoppingCallback
+import torch
+from training.callbacks import MLflowLoggerCallback
 
+def train():
+    """Función principal de entrenamiento de MobileViT Cats vs Dogs."""
+    
+    # Cargar dataset
+    dataset = get_dataloaders(
+        test_size=CONFIG["dataset"]["val_split"],
+        seed=CONFIG["dataset"]["seed"]
+    )
 
-def preprocess_fn(feature_extractor, augmentations):
-    def preprocess(examples):
-        images = [augmentations(img.convert("RGB")) for img in examples["image"]]
-        pixel_values = feature_extractor(images=images, return_tensors="pt").pixel_values
-        return {"pixel_values": pixel_values, "labels": examples["labels"]}
-    return preprocess
+    # Transformaciones
+    train_transforms = get_train_transforms(CONFIG["dataset"]["image_size"])
+    val_transforms   = get_val_transforms(CONFIG["dataset"]["image_size"])
 
+    # Construir modelo y feature extractor
+    model, feature_extractor = get_model_and_processor(
+        model_name=CONFIG["model"]["name"],
+        num_classes=CONFIG["model"]["num_classes"]
+    )
 
-def main():
+    # Preprocesamiento dataset
+    dataset["train"] = preprocess_dataset(dataset["train"], feature_extractor, train_transforms)
+    dataset["test"]  = preprocess_dataset(dataset["test"], feature_extractor, val_transforms)
 
-    init_mlflow()
+    # Pasar modelo a GPU si está disponible
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model.to(device)
 
-    dataset = load_cats_dogs_dataset()
-
-    model, feature_extractor = build_model(CONFIG["model_name"])
-
-    augmentations = get_augmentations()
-
-    preprocess = preprocess_fn(feature_extractor, augmentations)
-
-    dataset = dataset.map(preprocess, batched=True)
-    dataset = dataset.remove_columns(["image"])
-    dataset.set_format(type="torch")
-
+    # Configurar Trainer
     training_args = TrainingArguments(
-        output_dir="./checkpoints",
-        per_device_train_batch_size=CONFIG["batch_size"],
-        per_device_eval_batch_size=CONFIG["batch_size"],
-        num_train_epochs=CONFIG["epochs"],
+        output_dir="./mobilevit_cats_vs_dogs",
+        per_device_train_batch_size=CONFIG["dataset"]["batch_size"],
+        per_device_eval_batch_size=CONFIG["dataset"]["batch_size"],
+        num_train_epochs=CONFIG["training"]["epochs"],
+        learning_rate=CONFIG["training"]["learning_rate"],
+        weight_decay=CONFIG["training"]["weight_decay"],
         eval_strategy="epoch",
         save_strategy="epoch",
-        learning_rate=CONFIG["lr"],
-        weight_decay=CONFIG["weight_decay"],
         load_best_model_at_end=True,
-        report_to=["mlflow"]
+        report_to=["mlflow"],
+        logging_steps=CONFIG["training"]["logging_steps"],
+        push_to_hub=False,
     )
 
     trainer = Trainer(
@@ -57,27 +60,17 @@ def main():
         train_dataset=dataset["train"],
         eval_dataset=dataset["test"],
         compute_metrics=compute_metrics,
-        callbacks=[EarlyStoppingCallback(early_stopping_patience=3)]
+        callbacks=[EarlyStoppingCallback(early_stopping_patience=CONFIG["training"]["patience"]), MLflowLoggerCallback()]
     )
 
-    with mlflow.start_run():
-
+    # Entrenar y loguear en MLflow
+    with start_mlflow_run(CONFIG["mlflow"]):
         trainer.train()
-
-        trainer.save_model("./model/mobilevit_cats_dogs.pt")
-        feature_extractor.save_pretrained("./model/")
-
-        preds_output = trainer.predict(dataset["test"])
-        logits = preds_output.predictions
-        labels = preds_output.label_ids
-        probs = torch.softmax(torch.tensor(logits), dim=1).numpy()
-        preds = probs.argmax(axis=1)
-
-        log_confusion_matrix(labels, preds)
-        log_roc_curve(labels, probs)
-        log_probability_histogram(probs)
-
+        # Guardar modelo y feature extractor juntos
+        trainer.model.save_pretrained("./best_model")
+        feature_extractor.save_pretrained("./best_model")
+        mlflow.log_artifacts("./best_model", artifact_path="best_model")
 
 if __name__ == "__main__":
-    main()
+    train()
 

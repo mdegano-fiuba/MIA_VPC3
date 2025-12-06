@@ -1,7 +1,6 @@
 # Dataset y entrenamiento
 dataset:
   name: "cats_vs_dogs"         # Nombre del dataset en Hugging Face
-  image_size: 256              # Tamaño de las imágenes para MobileViT
   batch_size: 16               # Tamaño de batch
   val_split: 0.2               # Porcentaje del dataset que se usará para validación
   seed: 42                     # Semilla
@@ -9,8 +8,11 @@ dataset:
 training:
   epochs: 1                    # Número de épocas de entrenamiento
   learning_rate: 5e-5          # Learning rate para el optimizador
+  weight_decay: 0.1
   fine_tune_layers: "classifier"  # Capas a descongelar para fine-tuning
-
+  patience: 3
+  logging_steps: 1
+  
 # MLflow
 mlflow:
   tracking_uri: "file:./mlruns"  # URI de tracking local (puede cambiarse a remoto)
@@ -26,3 +28,8 @@ model:
   num_classes: 2
   frozen_blocks: 3
 
+# Transformaciones
+transforms:
+  image_size: 224
+  rotation: 15
+  escalation: 1.14
