@@ -21,8 +21,8 @@ def train():
     )
 
     # Transformaciones
-    train_transforms = get_train_transforms(CONFIG["dataset"]["image_size"])
-    val_transforms   = get_val_transforms(CONFIG["dataset"]["image_size"])
+    train_transforms = get_train_transforms(CONFIG["transforms"]["image_size"])
+    val_transforms   = get_val_transforms(CONFIG["transforms"]["image_size"])
 
     # Construir modelo y feature extractor
     model, feature_extractor = get_model_and_processor(

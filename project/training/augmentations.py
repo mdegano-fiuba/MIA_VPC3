@@ -18,7 +18,7 @@ def get_val_transforms(image_size):
     """
     from torchvision.transforms import Resize, CenterCrop
     return transforms.Compose([
-        Resize(int(image_size * CONFIG['transforms']['escalation']))),
+        Resize(int(image_size * CONFIG['transforms']['escalation'])),
         CenterCrop(image_size)
     ])
 
