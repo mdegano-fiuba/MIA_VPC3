@@ -12,8 +12,10 @@ def load_cats_dogs_dataset(test_size=0.2, seed=42):
         random_state=seed
     )
 
-    train_ds = dataset.select(train_idx)
-    test_ds = dataset.select(test_idx)
+    return dataset.select(train_idx), dataset.select(test_idx)
 
+
+def get_dataloaders(test_size=0.2, seed=42):
+    train_ds, test_ds = load_cats_dogs_dataset(test_size, seed)
     return DatasetDict({"train": train_ds, "test": test_ds})
 
