@@ -31,10 +31,10 @@ def get_training_args():
     return training_args_kwargs
 
 
-def save_test_dataset(dataset_dict, save_dir=CONFIG["folders"]["test_dataset"]):
-    if 'test' in dataset_dict:
-        test_dataset = dataset_dict['test']
-        # Guardar solo la partición 'test'
-        test_dataset.save_to_disk(save_dir)
-    else:
-        raise KeyError("No 'test' partition found in the dataset.")
+def save_test_dataset(dataset, save_dir=CONFIG["folders"]["test_dataset"]):
+    try:
+        # Intenta guardar el dataset en el directorio proporcionado
+        dataset.save_to_disk(save_dir)
+    except Exception as e:
+        raise RuntimeError(f"Error saving the test dataset to {save_dir}: {str(e)}") from e
+
