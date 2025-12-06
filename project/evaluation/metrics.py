@@ -2,9 +2,9 @@ from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_sc
 
 def compute_all_metrics(labels, preds):
     return {
-        "accuracy": accuracy_score(labels, preds),
-        "f1": f1_score(labels, preds),
-        "precision": precision_score(labels, preds),
-        "recall": recall_score(labels, preds)
+        "eval_accuracy": accuracy_score(labels, preds),
+        "eval_f1": f1_score(labels, preds),
+        "eval_precision": precision_score(labels, preds),
+        "eval_recall": recall_score(labels, preds)
     }
 
