@@ -33,7 +33,7 @@ def load_cats_dogs_dataset(test_size, seed, max_samples=None):
             selected_idx.extend(extra_idx)
 
         dataset = dataset.select(selected_idx)
-        labels = np.array([dataset[i]["label"] for i in range(len(dataset))])
+        labels = np.array([dataset[i]["labels"] for i in range(len(dataset))])
 
     # Dividir en train/test manteniendo balance
     train_idx, test_idx = train_test_split(
