@@ -1,4 +1,5 @@
 from torchvision import transforms
+from configs.config import CONFIG
 
 def get_train_transforms(image_size):
     """
