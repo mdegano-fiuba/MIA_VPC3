@@ -2,6 +2,7 @@ import torch
 from transformers import MobileViTForImageClassification, MobileViTImageProcessor
 from evaluation.metrics import compute_all_metrics
 from datasets import DatasetDict
+from configs.config import CONFIG
 
 def evaluate(model_path, dataset):
     model = MobileViTForImageClassification.from_pretrained(model_path)
@@ -24,8 +25,8 @@ def evaluate(model_path, dataset):
 
 if __name__ == "__main__":
 
-    model_path = "./model/trained"  # Modelo entrenado
-    dataset_path = "./data/test_dataset"  # Dataset de test
+    model_path = CONFIG["folders"]["model"] # Modelo entrenado
+    dataset_path = CONFIG["folders"]["test_dataset"] # Dataset de test
     
     dataset = DatasetDict.load_from_disk(dataset_path)
 
@@ -38,7 +39,7 @@ if __name__ == "__main__":
         log_metrics(metrics)
 
         # Generar y guardar los gráficos
-        loss_path, metrics_path = plot_loss_and_metrics(dataset, save_dir="./", prefix="eval_")
+        loss_path, metrics_path = plot_loss_and_metrics(dataset, save_dir=CONFIG["folders"]["root"], prefix="eval_")
         log_mlflow_artifacts([loss_path, metrics_path])
 
         # Graficar y guardar la matriz de confusión y ROC

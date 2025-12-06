@@ -15,7 +15,7 @@ def compute_metrics(eval_pred):
 
 def get_training_args():
     training_args_kwargs = {
-        "output_dir": "./mobilevit_cats_vs_dogs",
+        "output_dir": CONFIG["folders"]["output"],
         "per_device_train_batch_size": int(CONFIG["dataset"]["batch_size"]),
         "per_device_eval_batch_size": int(CONFIG["dataset"]["batch_size"]),
         "num_train_epochs": int(CONFIG["training"]["epochs"]),
@@ -31,7 +31,7 @@ def get_training_args():
     return training_args_kwargs
 
 
-def save_test_dataset(dataset_dict, save_dir="./data/test_dataset"):
+def save_test_dataset(dataset_dict, save_dir=CONFIG["folders"]["test_dataset"]):
     if 'test' in dataset_dict:
         test_dataset = dataset_dict['test']
         # Guardar solo la partición 'test'

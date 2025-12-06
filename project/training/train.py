@@ -5,7 +5,7 @@ from training.data_loader import get_dataloaders
 from training.augmentations import get_train_transforms, get_val_transforms
 from training.preprocessing import preprocess_dataset
 from training.model_builder import get_model_and_processor
-from training.trainer_utils import compute_metrics, get_training_args
+from training.trainer_utils import compute_metrics, get_training_args, save_test_dataset
 from training.mlflow_utils import start_mlflow_run, log_mlflow_artifacts, get_active_run
 from transformers import Trainer, TrainingArguments, EarlyStoppingCallback
 from training.callbacks import MLflowLoggerCallback
@@ -58,7 +58,7 @@ def train():
         trainer.train()
         
         run = get_active_run()  
-        model_dir = f"./best_model_{run.info.run_id}"
+        model_dir = f"{CONFIG['folders']['best_model']}{run.info.run_id}"
     
         # Guardar modelo y feature extractor juntos
         trainer.model.save_pretrained(model_dir)
@@ -67,7 +67,7 @@ def train():
 
         # Curvas de loss y métricas
         log_history = trainer.state.log_history
-        loss_path, metrics_path = plot_loss_and_metrics(log_history, save_dir="./", prefix="training_")
+        loss_path, metrics_path = plot_loss_and_metrics(log_history, save_dir=CONFIG['folders']['root'], prefix="training_")
 
         # Loguear gráficos en MLflow
         log_mlflow_artifacts(loss_path)

@@ -34,3 +34,12 @@ transforms:
   image_size: 224
   rotation: 15
   escalation: 1.14
+
+# Directorios
+folders:
+  mlflow: "./mlflow"
+  test_dataset: "./data/test_dataset"
+  best_model: "./best_model_"
+  root: "./"
+  output: "./mobilevit_cats_vs_dogs"
+  model: "./model/trained" 
