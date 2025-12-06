@@ -37,13 +37,13 @@ if __name__ == "__main__":
     print("\nMetrics evaluation...\n", flush=True)
     metrics = evaluate(model_path, dataset)
 
+    # Imprimir las métricas obtenidas
+    print("Metrics:", metrics)
+    raise ValueError("Abort!")
+     
     # Loguear métricas en MLflow
     with start_mlflow_run(CONFIG["mlflow"]):
     
-        run_id = get_active_run()
-        client = mlflow.tracking.MlflowClient()
-        metrics = run.data.metrics
-
         # Generar y guardar los gráficos
         loss_path, metrics_path = plot_loss_and_metrics(metrics, save_dir=CONFIG["folders"]["metrics"], prefix="eval_")
         print(f"\nLoss path: {loss_path}\n", flush=True)
@@ -62,5 +62,4 @@ if __name__ == "__main__":
         plot_roc(labels, torch.softmax(torch.cat(logits), dim=1).cpu().numpy(), path=img_path)
         log_mlflow_artifacts(img_path)
 
-    # Imprimir las métricas obtenidas
-    print("Metrics:", metrics)
+

@@ -17,11 +17,12 @@ def plot_roc(labels, probs, path="roc.png"):
     plt.savefig(path)
 
 
-def plot_loss_and_metrics(log_history, save_dir=".", prefix=""):
+def plot_loss_and_metrics(log_history , save_dir=".", prefix=""):
     """
     Grafica la loss de entrenamiento y validación y métricas por época.
     Guarda los gráficos como PNG en save_dir con prefijo opcional.
     """
+        
     # Loss
     train_loss = [x['loss'] for x in log_history if 'loss' in x]
     eval_loss  = [x['eval_loss'] for x in log_history if 'eval_loss' in x]
