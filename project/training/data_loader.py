@@ -1,8 +1,17 @@
 from datasets import load_dataset, DatasetDict
 from sklearn.model_selection import train_test_split
 
+# DATASET REDUCIDO PARA PRUEBAS
+from datasets import load_from_disk
+#
+
 def load_cats_dogs_dataset(test_size, seed):
-    dataset = load_dataset("cats_vs_dogs")["train"]
+
+    # DATASET REDUCIDO PARA PRUEBAS
+    # dataset = load_dataset("cats_vs_dogs")["train"] 
+    dataset = load_from_disk("./data/tinyDS/")
+    ####
+
     labels = dataset["labels"]
     train_idx, test_idx = train_test_split(
         range(len(labels)),
