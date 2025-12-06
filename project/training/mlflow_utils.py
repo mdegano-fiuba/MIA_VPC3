@@ -11,3 +11,5 @@ def start_mlflow_run(mlflow_config):
     with mlflow.start_run():
         yield
 
+def log_mlflow_artifacts(path, artifact_path="artifacts"):
+    mlflow.log_artifacts(path, artifact_path=artifact_path)

@@ -56,16 +56,16 @@ def train():
         # Guardar modelo y feature extractor juntos
         trainer.model.save_pretrained("./best_model")
         feature_extractor.save_pretrained("./best_model")
-        mlflow.log_artifacts("./best_model", artifact_path="best_model")
+        log_mlflow_artifacts("./best_model", artifact_path="best_model")
 
         # Curvas de loss y métricas
         log_history = trainer.state.log_history
         loss_path, metrics_path = plot_loss_and_metrics(log_history, save_dir="./", prefix="training_")
 
         # Loguear gráficos en MLflow
-        mlflow.log_artifact(loss_path)
+        log_mlflow_artifacts(loss_path)
         if metrics_path:
-            mlflow.log_artifact(metrics_path)
+            log_mlflow_artifacts(metrics_path)
             
 if __name__ == "__main__":
     train()
