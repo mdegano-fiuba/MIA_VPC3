@@ -4,7 +4,7 @@ from evaluation.metrics import compute_all_metrics
 from evaluation.plots import plot_loss_and_metrics, plot_roc, plot_confusion
 from datasets import Dataset
 from configs.config import CONFIG
-from training.mlflow_utils import start_mlflow_run, log_mlflow_artifacts, log_metrics
+from training.mlflow_utils import start_mlflow_run, log_mlflow_artifacts, get_active_run
 
 def evaluate(model_path, dataset):
     model = MobileViTForImageClassification.from_pretrained(model_path)
@@ -40,11 +40,12 @@ if __name__ == "__main__":
     # Loguear métricas en MLflow
     with start_mlflow_run(CONFIG["mlflow"]):
     
-        print("\nMLflow logging...\n", flush=True)
-        log_metrics(metrics)
+        run_id = get_active_run()
+        client = mlflow.tracking.MlflowClient()
+        metrics = run.data.metrics
 
         # Generar y guardar los gráficos
-        loss_path, metrics_path = plot_loss_and_metrics(dataset, save_dir=CONFIG["folders"]["metrics"], prefix="eval_")
+        loss_path, metrics_path = plot_loss_and_metrics(metrics, save_dir=CONFIG["folders"]["metrics"], prefix="eval_")
         print(f"\nLoss path: {loss_path}\n", flush=True)
         log_mlflow_artifacts(loss_path)
         print(f"\nMetrics path: {metrics_path}\n", flush=True)

@@ -44,6 +44,7 @@ def plot_loss_and_metrics(log_history, save_dir=".", prefix=""):
     precision  = [x['eval_precision'] for x in log_history if 'eval_precision' in x]
     recall     = [x['eval_recall'] for x in log_history if 'eval_recall' in x]
 
+    metrics_path = None
     if accuracy:
         plt.figure()
         plt.plot(epochs, accuracy, label="Accuracy")
