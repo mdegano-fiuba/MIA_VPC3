@@ -37,7 +37,7 @@ transforms:
 
 # Directorios
 folders:
-  mlflow: "./mlflow"
+  mlruns: "./mlflow/mlruns"
   test_dataset: "./data/test_dataset"
   best_model: "./model/best_model_"
   root: "./"
