@@ -45,13 +45,19 @@ if __name__ == "__main__":
 
         # Generar y guardar los gráficos
         loss_path, metrics_path = plot_loss_and_metrics(dataset, save_dir=CONFIG["folders"]["metrics"], prefix="eval_")
-        log_mlflow_artifacts([loss_path, metrics_path])
+        log_mlflow_artifacts(loss_path)
+        log_mlflow_artifacts(metrics_path)
 
         # Graficar y guardar la matriz de confusión y ROC
-        plot_confusion(labels, preds, path="confusion_matrix.png")
-        plot_roc(labels, torch.softmax(torch.cat(logits), dim=1).cpu().numpy(), path="roc_curve.png")
-        # Registra los gráficos adicionales
-        log_mlflow_artifacts(["confusion_matrix.png", "roc_curve.png"])
+        img_path = CONFIG["folders"]["metrics"]
+        
+        img_path = img_path + "/confusion_matrix.png"
+        plot_confusion(labels, preds, path=img_path)
+        log_mlflow_artifacts(img_path)
+     
+        img_path = img_path + "/roc_curve.png"
+        plot_roc(labels, torch.softmax(torch.cat(logits), dim=1).cpu().numpy(), path=img_path)
+        log_mlflow_artifacts(img_path)
 
     # Imprimir las métricas obtenidas
     print("Metrics:", metrics)
