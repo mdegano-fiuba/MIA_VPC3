@@ -47,7 +47,7 @@ def load_cats_dogs_dataset(test_size, seed, max_samples=None):
 
 
 def get_dataloaders(test_size, seed, max_samples=None):
-    train_ds, test_ds = load_cats_dogs_dataset(test_size, seed, max_samples=None)
+    train_ds, test_ds = load_cats_dogs_dataset(test_size, seed, max_samples)
     return DatasetDict({"train": train_ds, "test": test_ds})
 
 
