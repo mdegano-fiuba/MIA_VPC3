@@ -58,5 +58,5 @@ def plot_loss_and_metrics(log_history, save_dir=".", prefix=""):
         plt.savefig(metrics_path)
         plt.close()
 
-    return (loss_path, metrics_path) if accuracy else (loss_path, None)
+    return (loss_path, metrics_path)
 
