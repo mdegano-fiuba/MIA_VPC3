@@ -43,4 +43,4 @@ folders:
   root: "./"
   output: "./model/mobilevit_cats_vs_dogs"
   model: "./model/trained" 
-  aux: "./aux"
+  metrics: "./metrics"
