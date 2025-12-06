@@ -20,3 +20,9 @@ mlflow:
 inference:
   class_names: ["Cat", "Dog"]
 
+# Modelo
+model:
+  name: "apple/mobilevit-small"
+  num_classes: 2
+  frozen_blocks: 3
+
