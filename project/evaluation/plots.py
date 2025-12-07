@@ -17,16 +17,21 @@ def plot_confusion(labels, preds, path="confusion.png"):
     disp.plot(cmap='Blues', values_format='d', ax=plt.gca())
     plt.title('Matriz de Confusión')
     plt.savefig(path)
-
-
+    plt.close() 
+    
 
 def plot_roc(labels, probs, path="roc.png"):
 
     fpr, tpr, _ = roc_curve(labels, probs[:,1])
     auc_val = auc(fpr, tpr)
+    plt.figure(figsize=(6,5))  
     plt.plot(fpr, tpr, label=f"AUC {auc_val:.2f}")
+    plt.xlabel("False Positive Rate")
+    plt.ylabel("True Positive Rate")
+    plt.title("Curva ROC")
     plt.legend()
     plt.savefig(path)
+    plt.close()  
 
 
 def plot_loss_and_metrics(log_history , save_dir=".", prefix=""):

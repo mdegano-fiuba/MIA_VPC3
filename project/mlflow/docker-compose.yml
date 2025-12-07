@@ -1,13 +1,18 @@
-version: "3.9"
+version: "3.8"
 
 services:
   mlflow:
     build: .
-    container_name: mlflow_ui
+    container_name: mlflow_server
+    env_file:
+      - .env
     ports:
-      - "${MLFLOW_PORT}:5000"
+      - "${MLFLOW_PORT}:${MLFLOW_PORT}"
     volumes:
-      - "${MLRUNS_DIR}:/mlflow/mlruns"
-    environment:
-      - MLFLOW_TRACKING_URI=/mlflow/mlruns
+      - ${MLRUNS_DIR}:${MLFLOW_ARTIFACTS}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${MLFLOW_PORT}"]
+      interval: 10s
+      retries: 5
 

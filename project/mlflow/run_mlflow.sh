@@ -1,54 +1,53 @@
 #!/bin/bash
 
-# -------------------------------
-# Script pro para levantar MLflow
-# -------------------------------
+echo "  MLflow Environment"
 
-# Cargar variables del .env si existe
-if [ -f .env ]; then
-    export $(cat .env | grep -v '^#' | xargs)
+# Comprobar archivo de entorno
+if [ ! -f ".env" ]; then
+    echo "[ERROR] No existe archivo .env"
+    exit 1
 fi
 
-# Valores por defecto
-MLFLOW_PORT=${MLFLOW_PORT:-5000}
-MLRUNS_DIR=${MLRUNS_DIR:-./mlruns}
-CONTAINER_NAME="mlflow_ui"
-LOG_FILE="mlflow_run.log"
+# Cargar variables
+source .env
 
-echo "✅ MLflow puerto: $MLFLOW_PORT, mlruns: $MLRUNS_DIR"
-echo "📄 Logs: $LOG_FILE"
+echo ">> MLflow HOST: $MLFLOW_HOST"
+echo ">> MLflow PORT: $MLFLOW_PORT"
+echo ">> Artefactos internos en: $MLFLOW_ARTIFACTS"
+echo ">> Artefactos locales en: $MLRUNS_DIR"
 
-# Limpiar contenedores viejos
-if [ $(docker ps -a -q -f name=$CONTAINER_NAME) ]; then
-    echo "🧹 Deteniendo contenedor viejo..."
-    docker stop $CONTAINER_NAME >> $LOG_FILE 2>&1
-    docker rm $CONTAINER_NAME >> $LOG_FILE 2>&1
+# Crear carpeta local si no existe
+if [ ! -d "$MLRUNS_DIR" ]; then
+    echo ">> Creando carpeta local de artefactos $MLRUNS_DIR ..."
+    mkdir -p "$MLRUNS_DIR"
 fi
 
-# Levantar MLflow con docker-compose
-echo "🔨 Construyendo imagen y levantando contenedor..."
-docker-compose up --build -d >> $LOG_FILE 2>&1
+# Ajustar permisos para que el contenedor pueda acceder
+sudo chown -R 1000:1000 "$MLRUNS_DIR"
+chmod -R 775 "$MLRUNS_DIR"
 
-# Esperar a que la UI esté lista
-echo "⏳ Esperando 5 segundos a que MLflow UI se inicie..."
-sleep 5
+echo ">> Construyendo imagen..."
+docker-compose build --no-cache
 
-# Abrir navegador según sistema operativo
-URL="http://localhost:$MLFLOW_PORT"
-echo "🌐 MLflow UI disponible en $URL"
+echo ">> Levantando contenedor MLflow..."
+docker-compose up -d
 
-OS=$(uname)
-if [[ "$OS" == "Linux" ]]; then
-    if command -v xdg-open > /dev/null; then
-        xdg-open $URL
+echo ">> Esperando al healthcheck..."
+for i in {1..20}; do
+    state=$(docker inspect --format='{{json .State.Health.Status}}' mlflow_server 2>/dev/null)
+    if [[ "$state" == "\"healthy\"" ]]; then
+        echo ">> MLflow está healthy ✔"
+        break
     fi
-elif [[ "$OS" == "Darwin" ]]; then
-    if command -v open > /dev/null; then
-        open $URL
-    fi
-elif [[ "$OS" == "MINGW"* || "$OS" == "CYGWIN"* ]]; then
-    start $URL
-fi
+    echo "   Esperando... ($i/20)"
+    sleep 2
+done
 
-echo "✅ MLflow UI levantado correctamente. Revisa el log en $LOG_FILE"
+echo "==============================================="
+echo " MLflow UI disponible en:"
+echo "  http://localhost:${MLFLOW_PORT}"
+echo ""
+echo " Carpeta local de artefactos:"
+echo "  $(pwd)/${MLRUNS_DIR}"
+echo "==============================================="
 
