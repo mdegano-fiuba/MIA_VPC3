@@ -22,14 +22,14 @@ def evaluate(model_path, dataset):
         logits.append(out.logits)
         labels.append(sample["labels"])
         
-        probs.append(torch.softmax(out.logits, dim=1).cpu().numpy()) 
+        prob = torch.softmax(out.logits, dim=1).cpu().numpy()[0]
+        probs.append(prob)
 
-    # Convertir logits y labels a tensores
+    # Convertir a tensores
     logits = torch.cat(logits)
-    labels = torch.tensor(labels)
-
-    # Predecir la clase con el índice con mayor probabilidad
-    preds = logits.argmax(axis=1)
+    labels = torch.tensor(labels).numpy()
+    preds = logits.argmax(dim=1).numpy()
+    probs = np.vstack(probs)  # (N,2)
 
     return compute_all_metrics(labels, preds), labels, preds, probs
 

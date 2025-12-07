@@ -2,14 +2,25 @@
 import matplotlib.pyplot as plt
 import os
 import seaborn as sns
-from sklearn.metrics import confusion_matrix, roc_curve, auc
+from sklearn.metrics import confusion_matrix, roc_curve, auc, ConfusionMatrixDisplay
 
 def plot_confusion(labels, preds, path="confusion.png"):
+
+    # Calcular la matriz de confusión
     cm = confusion_matrix(labels, preds)
-    sns.heatmap(cm, annot=True, cmap="Blues")
+    # Crear el display
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=CONFIG['inference']['class_names'])
+
+    # Graficar
+    plt.figure(figsize=(6,5))
+    disp.plot(cmap='Blues', values_format='d', ax=plt.gca())
+    plt.title('Matriz de Confusión')
     plt.savefig(path)
 
+
+
 def plot_roc(labels, probs, path="roc.png"):
+
     fpr, tpr, _ = roc_curve(labels, probs[:,1])
     auc_val = auc(fpr, tpr)
     plt.plot(fpr, tpr, label=f"AUC {auc_val:.2f}")
