@@ -38,10 +38,9 @@ if __name__ == "__main__":
     metrics, labels, preds = evaluate(model_path, dataset)
 
     # Imprimir las métricas obtenidas
-    for x in metrics:
-        print("Eval Dataset Metrics:")
-        for key, val in x.items():
-            print(f"{key}: {val}")
+    print("Eval Dataset Metrics:")
+    for key, val in metrics.items():
+        print(f"{key}: {val}")
      
     # Loguear métricas en MLflow
     with start_mlflow_run(CONFIG["mlflow"]):
