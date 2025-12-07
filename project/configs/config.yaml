@@ -11,7 +11,7 @@ training:
   learning_rate: 0.00005       # Learning rate para el optimizador
   weight_decay: 0.1            # Regularización
   fine_tune_layers: "classifier"  # Capas a descongelar para fine-tuning
-  patience: 3                  # Cantidad de épocas para early stopping 
+  patience: 5                  # Cantidad de épocas para early stopping 
   logging_steps: 1             # Cada cuántas épocas loguear
   
 # MLflow
