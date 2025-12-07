@@ -1,4 +1,5 @@
 import torch
+import numpy as np
 from transformers import MobileViTForImageClassification, MobileViTImageProcessor
 from evaluation.metrics import compute_all_metrics
 from evaluation.plots import plot_loss_and_metrics, plot_roc, plot_confusion
@@ -57,12 +58,12 @@ if __name__ == "__main__":
         # Graficar y guardar la matriz de confusión y ROC
         img_path = CONFIG["folders"]["metrics"]
         
-        img_path = img_path + "/confusion_matrix.png"
-        plot_confusion(labels, preds, path=img_path)
-        log_mlflow_artifacts(img_path)
+        img_path_cm = img_path + "/confusion_matrix.png"
+        plot_confusion(labels, preds, path=img_path_cm)
+        log_mlflow_artifacts(img_path_cm)
      
-        img_path = img_path + "/roc_curve.png"
-        plot_roc(labels, probs, path=img_path)
-        log_mlflow_artifacts(img_path)
+        img_path_rc = img_path + "/roc_curve.png"
+        plot_roc(labels, probs, path=img_path_rc)
+        log_mlflow_artifacts(img_path_rc)
 
 

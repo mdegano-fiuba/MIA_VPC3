@@ -2,6 +2,7 @@
 import matplotlib.pyplot as plt
 import os
 import seaborn as sns
+from configs.config import CONFIG
 from sklearn.metrics import confusion_matrix, roc_curve, auc, ConfusionMatrixDisplay
 
 def plot_confusion(labels, preds, path="confusion.png"):

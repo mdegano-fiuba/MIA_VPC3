@@ -4,7 +4,7 @@ from configs.config import CONFIG
 from PIL import Image
 from transformers import MobileViTForImageClassification, MobileViTImageProcessor
 
-model_path = "./model/trained"
+model_path = CONFIG['folders']['model']
 model = MobileViTForImageClassification.from_pretrained(model_path)
 processor = MobileViTImageProcessor.from_pretrained(model_path)
 
@@ -29,7 +29,7 @@ iface = gr.Interface(
     fn=predict,
     inputs=gr.Image(type="pil"),
     outputs=gr.Label(num_top_classes=2),
-    title="Cats vs Dogs Classifier",
+    title="🐱 Cats vs. 🐶 Dogs Classifier",
 )
 
 if __name__ == "__main__":
