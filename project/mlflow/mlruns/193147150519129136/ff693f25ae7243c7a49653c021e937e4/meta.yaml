@@ -1,0 +1,14 @@
+artifact_uri: file:///content/MIA_VPC3/project/mlflow/mlruns/193147150519129136/ff693f25ae7243c7a49653c021e937e4/artifacts
+end_time: 1765077193731
+entry_point_name: ''
+experiment_id: '193147150519129136'
+lifecycle_stage: active
+run_id: ff693f25ae7243c7a49653c021e937e4
+run_name: capable-auk-759
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765076979033
+status: 3
+tags: []
+user_id: root
