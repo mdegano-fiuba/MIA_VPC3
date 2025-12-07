@@ -12,17 +12,26 @@ def evaluate(model_path, dataset):
 
     logits = []
     labels = []
+    probs = []
 
     for sample in dataset:
         inputs = processor(images=sample["image"], return_tensors="pt")
         with torch.no_grad():
             out = model(inputs.pixel_values)
+            
         logits.append(out.logits)
         labels.append(sample["labels"])
+        
+        probs.append(torch.softmax(out.logits, dim=1).cpu().numpy()) 
 
-    preds = torch.softmax(torch.cat(logits), dim=1).argmax(axis=1)
+    # Convertir logits y labels a tensores
+    logits = torch.cat(logits)
+    labels = torch.tensor(labels)
 
-    return compute_all_metrics(labels, preds)
+    # Predecir la clase con el índice con mayor probabilidad
+    preds = logits.argmax(axis=1)
+
+    return compute_all_metrics(labels, preds), labels, preds, probs
 
 
 if __name__ == "__main__":
@@ -35,7 +44,7 @@ if __name__ == "__main__":
 
     # Llamar a la función evaluate y obtener las métricas
     print("\nMetrics evaluation...\n", flush=True)
-    metrics, labels, preds = evaluate(model_path, dataset)
+    metrics, labels, preds, probs = evaluate(model_path, dataset)
 
     # Imprimir las métricas obtenidas
     print("Eval Dataset Metrics:")
