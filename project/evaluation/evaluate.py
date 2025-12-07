@@ -40,8 +40,8 @@ if __name__ == "__main__":
     # Imprimir las métricas obtenidas
     for x in metrics:
         print("Eval Dataset Metrics:")
-        for m, val in x:
-            print(f"{m}: {val}\n")
+        for key, val in x.items():
+            print(f"{key}: {val}")
      
     # Loguear métricas en MLflow
     with start_mlflow_run(CONFIG["mlflow"]):
