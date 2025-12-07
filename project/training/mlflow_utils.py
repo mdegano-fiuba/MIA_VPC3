@@ -12,12 +12,12 @@ def start_mlflow_run(mlflow_config):
         yield
 
 def log_mlflow_artifacts(path, artifact_path="artifacts"):
-    try:
-        mlflow.log_artifacts(path, artifact_path=artifact_path)
-    except Exception as e:
-        # Si ocurre algún error, se captura y muestra un mensaje de error
-        print(f"\nError while logging artifacts {path}: {e}\n")
-        raise  # Volver a lanzar la excepción para que no se continúe sin el log adecuado
+    if path is not None:
+        try:
+            mlflow.log_artifacts(path, artifact_path=artifact_path)
+        except Exception as e:
+            # Si ocurre algún error, se captura y muestra un mensaje de error
+            print(f"\nError while logging artifacts {path}: {e}\n")
     
 def get_active_run():
     """Devuelve el run activo de MLflow. Lanza error si no hay ninguno."""
