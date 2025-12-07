@@ -1,0 +1,14 @@
+artifact_uri: file:///content/MIA_VPC3/project/mlflow/mlruns/193147150519129136/e22afac796374c258ae8a426ecdefadb/artifacts
+end_time: 1765077548672
+entry_point_name: ''
+experiment_id: '193147150519129136'
+lifecycle_stage: active
+run_id: e22afac796374c258ae8a426ecdefadb
+run_name: rebellious-hawk-645
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765077548456
+status: 3
+tags: []
+user_id: root
