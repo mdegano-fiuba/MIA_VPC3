@@ -1,0 +1,6 @@
+artifact_location: file:///content/MIA_VPC3/project/mlflow/mlruns/292277474786075902
+creation_time: 1765138129776
+experiment_id: '292277474786075902'
+last_update_time: 1765138129776
+lifecycle_stage: active
+name: cats_vs_dogs_experiment
