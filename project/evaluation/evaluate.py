@@ -38,17 +38,12 @@ if __name__ == "__main__":
     metrics = evaluate(model_path, dataset)
 
     # Imprimir las métricas obtenidas
-    print("Metrics:", metrics)
+    print("Eval Dataset Metrics:")
+    for m, val in metrics:
+        print(f"{m}: {val}\n")
      
     # Loguear métricas en MLflow
     with start_mlflow_run(CONFIG["mlflow"]):
-    
-        # Generar y guardar los gráficos
-        loss_path, metrics_path = plot_loss_and_metrics(metrics, save_dir=CONFIG["folders"]["metrics"], prefix="eval_")
-        print(f"\nLoss path: {loss_path}\n", flush=True)
-        log_mlflow_artifacts(loss_path)
-        print(f"\nMetrics path: {metrics_path}\n", flush=True)
-        log_mlflow_artifacts(metrics_path)
 
         # Graficar y guardar la matriz de confusión y ROC
         img_path = CONFIG["folders"]["metrics"]

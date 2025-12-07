@@ -24,22 +24,21 @@ def plot_loss_and_metrics(log_history , save_dir=".", prefix=""):
     """
     loss_path, metrics_path = None, None
         
-    # Loss sólo en train
-    if (prefix=="train_"):
-        train_loss = [x['loss'] for x in log_history if 'loss' in x]
-        eval_loss  = [x['eval_loss'] for x in log_history if 'eval_loss' in x]
-        epochs = range(1, len(eval_loss)+1)
+    # Loss 
+    train_loss = [x['loss'] for x in log_history if 'loss' in x]
+    eval_loss  = [x['eval_loss'] for x in log_history if 'eval_loss' in x]
+    epochs = range(1, len(eval_loss)+1)
 
-        plt.figure()
-        plt.plot(epochs, train_loss[:len(epochs)], label="Train Loss")
-        plt.plot(epochs, eval_loss, label="Validation Loss")
-        plt.xlabel("Epoch")
-        plt.ylabel("Loss")
-        plt.title("Training vs Validation Loss")
-        plt.legend()
-        loss_path = os.path.join(save_dir, f"{prefix}loss_plot.png")
-        plt.savefig(loss_path)
-        plt.close()
+    plt.figure()
+    plt.plot(epochs, train_loss[:len(epochs)], label="Train Loss")
+    plt.plot(epochs, eval_loss, label="Validation Loss")
+    plt.xlabel("Epoch")
+    plt.ylabel("Loss")
+    plt.title("Training vs Validation Loss")
+    plt.legend()
+    loss_path = os.path.join(save_dir, f"{prefix}loss_plot.png")
+    plt.savefig(loss_path)
+    plt.close()
 
     # Métricas: Accuracy, F1, Precision, Recall (si están en log_history)
     accuracy   = [x['eval_accuracy'] for x in log_history if 'eval_accuracy' in x]
