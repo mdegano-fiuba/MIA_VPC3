@@ -1,0 +1,14 @@
+artifact_uri: file:///content/MIA_VPC3/project/mlflow/mlruns/292277474786075902/6233d443c1364bc195aeae706ee0f4b6/artifacts
+end_time: 1765141577795
+entry_point_name: ''
+experiment_id: '292277474786075902'
+lifecycle_stage: active
+run_id: 6233d443c1364bc195aeae706ee0f4b6
+run_name: sedate-mare-980
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765141577570
+status: 3
+tags: []
+user_id: root
