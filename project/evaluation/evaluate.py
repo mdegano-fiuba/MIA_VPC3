@@ -62,7 +62,7 @@ if __name__ == "__main__":
         log_mlflow_artifacts(img_path)
      
         img_path = img_path + "/roc_curve.png"
-        plot_roc(labels, torch.softmax(torch.cat(logits), dim=1).cpu().numpy(), path=img_path)
+        plot_roc(labels, probs, path=img_path)
         log_mlflow_artifacts(img_path)
 
 
