@@ -6,5 +6,5 @@ def compute_all_metrics(labels, preds):
         "eval_f1": f1_score(labels, preds),
         "eval_precision": precision_score(labels, preds),
         "eval_recall": recall_score(labels, preds)
-    }]
+    }, labels, preds]
 

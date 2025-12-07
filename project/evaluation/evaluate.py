@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
     # Llamar a la función evaluate y obtener las métricas
     print("\nMetrics evaluation...\n", flush=True)
-    metrics = evaluate(model_path, dataset)
+    metrics, labels, preds = evaluate(model_path, dataset)
 
     # Imprimir las métricas obtenidas
     for x in metrics:
