@@ -25,7 +25,7 @@ def plot_loss_and_metrics(log_history , save_dir=".", prefix=""):
     loss_path, metrics_path = None, None
         
     # Loss sólo en train
-    if (prefix="train_"):
+    if (prefix=="train_"):
         train_loss = [x['loss'] for x in log_history if 'loss' in x]
         eval_loss  = [x['eval_loss'] for x in log_history if 'eval_loss' in x]
         epochs = range(1, len(eval_loss)+1)
