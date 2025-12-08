@@ -1,5 +1,5 @@
 # Visión por Computadora 3  
-<br>
+
 
 ## 🐱🐶 MobileViT | Fine-Tuning | Cats vs Dogs  
 <br>
