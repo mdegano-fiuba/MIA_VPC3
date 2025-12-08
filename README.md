@@ -1,10 +1,10 @@
 # Visión por Computadora 3  
-
+<br>
 
 ## 🐱🐶 MobileViT | Fine-Tuning | Cats vs Dogs  
 
 
-<table>
+<table border=0>
   <tr>
     <td>
       🔹 Myrna Lorena Degano	(a1618)<br>
@@ -17,8 +17,7 @@
   </tr>
 </table>
 <br>
-<br>
-<br>  
+
 👉 Este proyecto implementa el fine-tuning de **MobileViT** usando el dataset *"Cats vs Dogs"* de *Hugging Face*.  
 Incluye:
   
