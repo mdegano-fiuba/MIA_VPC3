@@ -10,12 +10,12 @@
 ├─ 📂 doc/  
 │  └─ 📂 imgs/  
 ├─ 📂 evaluation/  
-│  ├─ 🐍 __init__.py  
+│  ├─ 🐍 \_\_init\_\_.py  
 │  ├─ 🐍 evaluate.py  
 │  ├─ 🐍 metrics.py  
 │  └─ 🐍 plots.py  
 ├─ 📂 inference/  
-│  ├─ 🐍 __init__.py  
+│  ├─ 🐍 \_\_init\_\_.py  
 │  └─ 🐍 app.py  
 ├─ 📂 metrics/  
 │  ├─ 🧮 confusion_matrix.png  
@@ -41,7 +41,7 @@
 │     └─ ...  
 │  └─ 🎞️ Inference_app.png  
 ├─ 📂 training/  
-│  ├─ 🐍 __init__.py  
+│  ├─ 🐍 \_\_init\_\_.py  
 │  ├─ 🐍 augmentations.py  
 │  ├─ 🐍 callbacks.py  
 │  ├─ 🐍 data_loader.py  
@@ -53,6 +53,7 @@
 ├─ 📄 requirements.txt  
 └─ 📘 README.md  
    
+
 
 
 
