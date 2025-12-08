@@ -1,16 +1,15 @@
-# Visión por Computadora 3  
-<br>
-## 📘 MobileViT | Fine-Tuning | Cats vs Dogs  
+# Visión por Computadora 3 👁️
+
+## 🐱🐶 MobileViT | Fine-Tuning | Cats vs Dogs  
 <br>
 * Myrna Lorena Degano	(a1618)
 <br><a href="mailto:myrna.l.degano@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Gmail-myrna.l.degano@gmail.com-B9E1F5?style=flat-square&logo=gmail"></a>  
-
 * Gustavo Julián	Rivas (a1620)
 <br><a href="mailto:gus.j.rivas@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Gmail-gus.j.rivas@gmail.com-B9E1F5?style=flat-square&logo=gmail"></a>  
 
 <br><br><br>
 
-Este proyecto implementa el fine-tuning de **MobileViT** usando el dataset *"Cats vs Dogs"* de *Hugging Face*.  
+👉 Este proyecto implementa el fine-tuning de **MobileViT** usando el dataset *"Cats vs Dogs"* de *Hugging Face*.  
 Incluye:
 
    ✔ Descarga y preprocesamiento del dataset  
@@ -29,7 +28,7 @@ Incluye:
 
 <br>  
 
-## Informe del proyecto  
+## 📄 Informe del proyecto  
 <br>
 <table border="0">
   <tr valign="center">
@@ -38,3 +37,12 @@ Incluye:
   </tr>
 </table>
 <br>
+
+## 🛠️ Herramientas  
+
+<img src="https://img.shields.io/badge/Python-B9E1F5?style=for-the-badge&logo=python&logoColor=white" />
+<img src="https://img.shields.io/badge/HuggingFace-B9E1F5?style=for-the-badge&logo=huggingface&logoColor=white" />
+<img src="https://img.shields.io/badge/Visual%20Transformers-B9E1F5?style=for-the-badge&logo=transformers&logoColor=white" />
+<img src="https://img.shields.io/badge/MLflow-B9E1F5?style=for-the-badge&logo=mlflow&logoColor=white" />
+
+
