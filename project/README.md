@@ -1,5 +1,6 @@
 # 📁 Estructura del proyecto  
 
+```plaintext
 🧩 project/
 |
 ├─ 📂 configs/
@@ -66,6 +67,7 @@
 └─ 📘 README.md              # Documentación principal del proyecto
 
    
+
 
 
 
