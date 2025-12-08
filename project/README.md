@@ -1,19 +1,22 @@
 # 📁 Estructura del proyecto
 
 🧩 project/  
- ├─ 📁 configs/  
+ ├─ 📁 configs/                                       # archivos de configuración    
  ├─ 📁 data/  
  ├─ 📁 doc/
- ├─ 📁 evaluation/
- ├─ 📁 inference/
- ├─ 📁 metrics/
- ├─ 📁 mlflow/
- ├─ 📁 model/
- ├─ 📁 notebooks/
- ├─ 📁 tests/
- ├─ 📁 training/
- ├─ 📄 requirements.txt 
- └─ README.md
+ ├─ 📁 evaluation/  
+ ├─ 📁 inference/  
+ ├─ 📁 metrics/  
+ ├─ 📁 mlflow/  
+ ├─ 📁 model/  
+ ├─ 📁 notebooks/  
+ ├─ 📁 tests/  
+ ├─ 📁 training/  
+ ├─ 📄 requirements.txt  
+ └─ README.md  
+
+   
+
 
 
 
