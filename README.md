@@ -1,14 +1,24 @@
-# Visión por Computadora 3 
+# Visión por Computadora 3  
+
 
 ## 🐱🐶 MobileViT | Fine-Tuning | Cats vs Dogs  
 
-  
-🔹 Myrna Lorena Degano	(a1618)  <a href="mailto:myrna.l.degano@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Gmail-myrna.l.degano@gmail.com-B9E1F5?style=flat-square&logo=gmail"></a>  
-  
-🔹 Gustavo Julián	Rivas (a1620)  <a href="mailto:gus.j.rivas@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Gmail-gus.j.rivas@gmail.com-B9E1F5?style=flat-square&logo=gmail"></a>  
 
-
-  
+<table>
+  <tr>
+    <td>
+      🔹 Myrna Lorena Degano	(a1618)<br>
+         <a href="mailto:myrna.l.degano@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Gmail-myrna.l.degano@gmail.com-B9E1F5?style=flat-square&logo=gmail"></a>  
+    </td>
+    <td>
+      🔹 Gustavo Julián	Rivas (a1620)<br>
+         <a href="mailto:gus.j.rivas@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Gmail-gus.j.rivas@gmail.com-B9E1F5?style=flat-square&logo=gmail"></a>  
+    </td>
+  </tr>
+</table>
+<br>
+<br>
+<br>  
 👉 Este proyecto implementa el fine-tuning de **MobileViT** usando el dataset *"Cats vs Dogs"* de *Hugging Face*.  
 Incluye:
   
@@ -19,15 +29,15 @@ Incluye:
    ✔ Métricas de evaluación  
    
    ✔ App de inferencia  
-
-
-  
+<br>
+<br>
+<br>  
 ## 📂 Estructura del repositorio  
 
-project <a href="./project/README.md">README.md</a>  
-  
-  
-  
+*project <a href="./project/README.md">README.md</a>*
+<br>
+<br>
+<br>  
 ## 📄 Informe del proyecto  
 <br>
 <table border="0">
@@ -36,6 +46,8 @@ project <a href="./project/README.md">README.md</a>
     <td><a href="./project/doc/VpC3_Informe_TP.pdf" target="_blank">Informe</a></td>
   </tr>
 </table>
+<br>
+<br>
 <br>  
   
 ## 🛠️ Herramientas  
