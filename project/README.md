@@ -1,27 +1,34 @@
 # 📁 Estructura del proyecto  
 
 🧩 project/  
+|  
 ├─ 📂 configs/    
 │  ├─ 🐍 config.py  
 │  └─ 📝 config.yaml  
+|  
 ├─ 📂 data/  
 │  └─ 📂 test_dataset/  
 │     └─ ...  
+|  
 ├─ 📂 doc/  
 │  └─ 📂 imgs/  
+|  
 ├─ 📂 evaluation/  
 │  ├─ 🐍 \_\_init\_\_.py  
 │  ├─ 🐍 evaluate.py  
 │  ├─ 🐍 metrics.py  
 │  └─ 🐍 plots.py  
+|  
 ├─ 📂 inference/  
 │  ├─ 🐍 \_\_init\_\_.py  
 │  └─ 🐍 app.py  
+|  
 ├─ 📂 metrics/  
 │  ├─ 🧮 confusion_matrix.png  
 │  ├─ 📈 roc_curve.png  
 │  ├─ 📉 train_loss_plot.png  
 │  └─ 📉 train_metrics_plot.png  
+|  
 ├─ 📂 mlflow/  
 │  └─ 📂 mlruns/  
 │     └─ ...  
@@ -29,17 +36,21 @@
 │  ├─ 🐳 Dockerfile  
 │  ├─ 🐳 docker-compose.yml  
 │  └─ ⚡ run_mlflow.sh  
+|  
 ├─ 📂 model/  
 │  └─ 📂 trained/  
 │     └─ ...  
+|  
 ├─ 📂 notebooks/  
 │  ├─ 📓 EDA.ipynb  
 │  ├─ 📓 Eval.ipynb  
 │  └─ 📓 Train.ipynb  
+|  
 ├─ 📂 tests/  
 │  └─ 📂 samples/  
 │     └─ ...  
 │  └─ 🎞️ Inference_app.png  
+|  
 ├─ 📂 training/  
 │  ├─ 🐍 \_\_init\_\_.py  
 │  ├─ 🐍 augmentations.py  
@@ -50,9 +61,11 @@
 │  ├─ 🐍 preprocessing.py  
 │  ├─ 🐍 train.py  
 │  └─ 🐍 trainer_utils.py  
+|  
 ├─ 📄 requirements.txt  
 └─ 📘 README.md  
    
+
 
 
 
