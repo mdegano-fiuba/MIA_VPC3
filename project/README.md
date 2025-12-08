@@ -4,8 +4,8 @@
 🧩 project/
 |
 ├─ 📂 configs/
-│  ├─ 🐍 `config.py`        # Configuraciones de Python
-│  └─ 📝 `config.yaml`      # Archivo YAML de parámetros
+│  ├─ 🐍 config.py        # Configuraciones de Python
+│  └─ 📝 config.yaml     # Archivo YAML de parámetros
 |
 ├─ 📂 data/
 │  └─ 📂 test_dataset/      # Dataset de prueba
@@ -15,14 +15,14 @@
 │  └─ 📂 imgs/              # Imágenes de documentación / figuras
 |
 ├─ 📂 evaluation/
-│  ├─ 🐍 `__init__.py`      # Inicializador del paquete evaluation
-│  ├─ 🐍 `evaluate.py`      # Script de evaluación de modelos
-│  ├─ 🐍 `metrics.py`       # Cálculo de métricas
-│  └─ 🐍 `plots.py`         # Funciones para graficar resultados
+│  ├─ 🐍 __init__.py      # Inicializador del paquete evaluation
+│  ├─ 🐍 evaluate.py      # Script de evaluación de modelos
+│  ├─ 🐍 metrics.py       # Cálculo de métricas
+│  └─ 🐍 plots.py         # Funciones para graficar resultados
 |
 ├─ 📂 inference/
-│  ├─ 🐍 `__init__.py`      # Inicializador del paquete inference
-│  └─ 🐍 `app.py`           # App de inferencia
+│  ├─ 🐍 __init__.py      # Inicializador del paquete inference
+│  └─ 🐍 app.py           # App de inferencia
 |
 ├─ 📂 metrics/
 │  ├─ 🧮 confusion_matrix.png   # Matriz de confusión
@@ -53,7 +53,7 @@
 │  └─ 🎞️ Inference_app.png  # Captura de la app de inferencia
 |
 ├─ 📂 training/
-│  ├─ 🐍 `__init__.py`       # Inicializador del paquete training
+│  ├─ 🐍 __init__.py       # Inicializador del paquete training
 │  ├─ 🐍 augmentations.py    # Funciones de augmentación de datos
 │  ├─ 🐍 callbacks.py        # Callbacks para entrenamiento
 │  ├─ 🐍 data_loader.py      # Carga y preprocesamiento de datos
@@ -67,6 +67,7 @@
 └─ 📘 README.md              # Documentación principal del proyecto
 
    
+
 
 
 
