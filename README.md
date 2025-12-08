@@ -2,9 +2,8 @@
 <br>
 
 ## 🐱🐶 MobileViT | Fine-Tuning | Cats vs Dogs  
-
-
-<table border=0>
+<br>
+<table border="0">
   <tr>
     <td>
       🔹 Myrna Lorena Degano	(a1618)<br>
@@ -30,13 +29,12 @@ Incluye:
    ✔ App de inferencia  
 <br>
 <br>
-<br>  
 ## 📂 Estructura del repositorio  
 
 *project <a href="./project/README.md">README.md</a>*
 <br>
 <br>
-<br>  
+ 
 ## 📄 Informe del proyecto  
 <br>
 <table border="0">
@@ -47,7 +45,6 @@ Incluye:
 </table>
 <br>
 <br>
-<br>  
   
 ## 🛠️ Herramientas  
 
