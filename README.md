@@ -44,7 +44,6 @@ Incluye:
   </tr>
 </table>
 <br>
-<br>
   
 ## 🛠️ Herramientas  
 
