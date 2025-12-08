@@ -1,15 +1,14 @@
-# MIA_VPC3
 # Visión por Computadora 3
 
-📘 MobileViT - Fine-Tuning - Cats vs Dogs
+## 📘 MobileViT - Fine-Tuning - Cats vs Dogs
 
-Myrna Lorena Degano	(a1618)
-<a href="mailto:myrna.l.degano@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Gmail-myrna.l.degano@gmail.com-B9E1F5?style=flat-square&logo=gmail"></a>
+* Myrna Lorena Degano	(a1618)
+<br><a href="mailto:myrna.l.degano@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Gmail-myrna.l.degano@gmail.com-B9E1F5?style=flat-square&logo=gmail"></a>  
 
-Gustavo Julián	Rivas (a1620)
-<a href="mailto:gus.j.rivas@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Gmail-gus.j.rivas@gmail.com-B9E1F5?style=flat-square&logo=gmail"></a>
-
-Este proyecto implementa el fine-tuning de MobileViT usando el dataset "Cats vs Dogs" de Hugging Face.
+* Gustavo Julián	Rivas (a1620)
+<br><a href="mailto:gus.j.rivas@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Gmail-gus.j.rivas@gmail.com-B9E1F5?style=flat-square&logo=gmail"></a>  
+<br><br><br>
+Este proyecto implementa el fine-tuning de **MobileViT** usando el dataset *"Cats vs Dogs"* de *Hugging Face*.
 Incluye:
 
 📥 Descarga y preprocesamiento del dataset
@@ -21,9 +20,9 @@ Incluye:
 🔮 App de inferencia
 
 
-📂 Estructura del repositorio
+## 📂 Estructura del repositorio
 
-📦 mobilevit-cats-vs-dogs
+📦 project
  ┣ 📁 data/                # Scripts de dataset
  ┣ 📁 src/
  │   ┣ train.py            # Entrenamiento
